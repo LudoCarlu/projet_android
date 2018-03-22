@@ -3,4 +3,8 @@
     <string name="title_home">Home</string>
     <string name="title_films">Films</string>
     <string name="title_series">Series</string>
+    <string name="action_search">Rechercher</string>
+    <string name="aboutus">A propos de nous</string>
+    <string name="aboutus_text">Ceci est une application pour un projet \n Créé par Maxime Faivre et Ludovic </string>
+    <string name="messageaccueil">Bonjour à tous, bienvenue sur HelloCiné ! \n Naviguez pour trouver les meilleurs films et séries !</string>
 </resources>
