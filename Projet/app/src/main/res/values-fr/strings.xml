@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <string name="app_name">Hellocine</string>
+        <string name="title_home">Accueil</string>
+        <string name="title_films">Films</string>
+        <string name="title_series">Series</string>
+        <string name="action_search">Rechercher</string>
+        <string name="aboutus">A propos de nous</string>
+        <string name="aboutus_text">Ceci est une application pour un projet \n Créé par Maxime Faivre et Ludovic </string>
+        <string name="messageaccueil">Bonjour à tous, bienvenue sur HelloCiné ! \n Naviguez pour trouver les meilleurs films et séries !</string>
+        <string name="descr_film"> Retrouvez la description des films, leurs notes, leur résumé et bien plus encore ! </string>
+        <string name="descr_serie"> Retrouvez la description des series, leurs notes, les épisodes, leur résumé et bien plus encore ! </string>
+        <string name="here"> Ici ! </string>
+</resources>

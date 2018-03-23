@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hellocine</string>
+    <string name="title_home">Home</string>
+    <string name="title_films">Movie</string>
+    <string name="title_series">Series</string>
+    <string name="action_search">Search</string>
+    <string name="aboutus">About us</string>
+    <string name="aboutus_text">This is an application for a project. \n Made by Maxime Faivre and Ludovic </string>
+    <string name="messageaccueil">Hello everybody, Welcome on HelloCiné ! \n Find your favorites film and series !</string>
+    <string name="descr_film"> Find the description of films , the rating and more ! </string>
+    <string name="descr_serie"> Find the description of series , the rating and more ! </string>
+    <string name="here"> Here ! </string>
+</resources>
