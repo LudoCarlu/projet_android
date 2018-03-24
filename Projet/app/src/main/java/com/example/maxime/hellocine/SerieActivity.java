@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class SerieActivity extends AppCompatActivity {
 
@@ -20,18 +21,17 @@ public class SerieActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     System.out.println("home");
-                    Intent intent = new Intent(SerieActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    SerieActivity.this.finish();
                     return true;
 
                 case R.id.navigation_movie:
                     Intent intent2 = new Intent(SerieActivity.this, MovieActivity.class);
+                    SerieActivity.this.finish();
                     startActivity(intent2);
                     return true;
 
                 case R.id.navigation_serie:
-                    Intent intent3 = new Intent(SerieActivity.this, SerieActivity.class);
-                    startActivity(intent3);
+                    Toast.makeText(SerieActivity.this, R.string.already_here, Toast.LENGTH_SHORT).show();
                     return true;
             }
             return false;

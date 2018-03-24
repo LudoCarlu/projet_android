@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.maxime.hellocine">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,7 +21,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".MovieActivity" />
-        <activity android:name=".SerieActivity"></activity>
+        <activity android:name=".SerieActivity" />
+
+        <service
+            android:name=".GetFilmsService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

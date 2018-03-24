@@ -11,4 +11,6 @@
     <string name="descr_film"> Find the description of films , the rating and more ! </string>
     <string name="descr_serie"> Find the description of series , the rating and more ! </string>
     <string name="here"> Here ! </string>
+    <string name="already_here"> You are already on the right page ! </string>
+
 </resources>

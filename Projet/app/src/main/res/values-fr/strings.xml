@@ -11,4 +11,5 @@
         <string name="descr_film"> Retrouvez la description des films, leurs notes, leur résumé et bien plus encore ! </string>
         <string name="descr_serie"> Retrouvez la description des series, leurs notes, les épisodes, leur résumé et bien plus encore ! </string>
         <string name="here"> Ici ! </string>
+        <string name="already_here"> Vous êtes déjà sur la bonne page ! </string>
 </resources>
