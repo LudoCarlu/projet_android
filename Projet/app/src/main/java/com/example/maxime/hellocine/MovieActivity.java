@@ -74,14 +74,18 @@ public class MovieActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.navigation_movie);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        GetFilmsService.startActionFilm(this);
-        IntentFilter intentFilter = new IntentFilter(FILMS_UPDATE);
-        LocalBroadcastManager.getInstance(this).registerReceiver(new FilmUpdate(),intentFilter);
 
-        this.rv = findViewById(R.id.rv_film);
-        rv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-        MovieAdapter ma = new MovieAdapter(getFilmFromFile());
-        rv.setAdapter(ma);
+        GetFilmsService.startActionFilm(this); /** On lance le telechargement du JSON et sa sauvegarde */
+        IntentFilter intentFilter = new IntentFilter(FILMS_UPDATE);
+        LocalBroadcastManager.getInstance(this).registerReceiver(new FilmUpdate(),intentFilter); /** On informe l'appli qu'on la téléchargé */
+
+        this.rv = findViewById(R.id.rv_film); /** On récupere le recyclerview afin de lui setter du text plus tard */
+        rv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)); /** On lui indique comment afficher nos éléments */
+        MovieAdapter ma = new MovieAdapter(getFilmFromFile()); /** on va chercher notre fichier JSON et on le donne a MovieAdapter pour qu'il le parse */
+        /**  Il va parser le JSON dans la fonction getFilmFromFile() qui va retourner notre tableau JSON, voir en dessous !
+         * Logiquement il retourne un JSONArray mais comment c'est pas itérable je lui fait retourner UN UNIQUE OBJECT : JSONObject */
+
+        rv.setAdapter(ma); /**  On donne le movie Adapter a notre Recycler view */
 
     }
 
@@ -110,11 +114,11 @@ public class MovieActivity extends AppCompatActivity {
 
     public JSONObject getFilmFromFile()  {
         try {
-            InputStream is = new FileInputStream(getCacheDir() + "/" + "films.json");
+            InputStream is = new FileInputStream(getCacheDir() + "/" + "films.json"); /**  va récup le JSON en cache */
             byte[] buffer = new byte[is.available()];
             is.read(buffer);
             is.close();
-            return new JSONObject(new String(buffer, "UTF-8"));
+            return new JSONObject(new String(buffer, "UTF-8")); /** Retourne l'objet JSON */
         }catch (IOException e){
             e.printStackTrace();
             return new JSONObject();
@@ -128,10 +132,10 @@ public class MovieActivity extends AppCompatActivity {
     public static final String FILMS_UPDATE="com.octip.cours.inf4042_11.FILMS_UPDATE";
     public class FilmUpdate extends BroadcastReceiver {
         @Override
-        public void onReceive(Context context, Intent intent){
+        public void onReceive(Context context, Intent intent){ /** Receiver : lorsque le telechargement se finit (genre de Listener de notre service*/
             Toast.makeText(MovieActivity.this,"Telechargement des films terminé !",Toast.LENGTH_SHORT).show();
             MovieAdapter ma = (MovieAdapter) rv.getAdapter();
-            ma.setNewMovie(getFilmFromFile());
+            ma.setNewMovie(getFilmFromFile()); /** S'il y va une modification de notre fichier, on update notre RecyclerView */
         }
     }
 

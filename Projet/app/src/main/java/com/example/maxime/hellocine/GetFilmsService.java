@@ -22,6 +22,15 @@ import android.support.v4.content.LocalBroadcastManager;
  * TODO: Customize class - update intent actions, extra parameters and static
  * helper methods.
  */
+
+
+/**
+
+
+C'est la classe qui nous permet d'aller chercher notre fichier JSON !
+
+
+ */
 public class GetFilmsService extends IntentService {
     // TODO: Rename actions, choose action names that describe tasks that this
     // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
@@ -39,7 +48,7 @@ public class GetFilmsService extends IntentService {
      */
     // TODO: Customize helper method
     public static void startActionFilm(Context context) {
-        Intent intent = new Intent(context, GetFilmsService.class);
+        Intent intent = new Intent(context, GetFilmsService.class); /**  Lorsqu'on lance le service il déclenche l'action HandleIntent*/
         intent.setAction(ACTION_GET_FILM);
         context.startService(intent);
     }
@@ -49,7 +58,7 @@ public class GetFilmsService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
-            handleActionFilms();
+            handleActionFilms(); /**  Maintenant On lance notre fonction pour aller chercher notre JSON */
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(MovieActivity.FILMS_UPDATE));
 
         }
@@ -62,12 +71,12 @@ public class GetFilmsService extends IntentService {
     private void handleActionFilms() {
         Log.d("tag","Thread service:"+ Thread.currentThread().getName());
         URL url=null;
-        try {
+        try { /** On va récuperer notre fichier JSON avec l'api .. Attention au paramètre */
             url= new URL("http://www.omdbapi.com/?t=Game%20of%20Thrones&Season=1&apikey=6da432bf");
             HttpURLConnection conn= (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();
-            if(HttpURLConnection.HTTP_OK==conn.getResponseCode()){
+            if(HttpURLConnection.HTTP_OK==conn.getResponseCode()){ /** On va sauvegarder notre JSON dans le cache de l'appli  dans un fichier .json*/
                 copyInputStreamToFile(conn.getInputStream(),new File(getCacheDir(),"films.json"));
                 Log.d("OK","Films downloaded");
             }

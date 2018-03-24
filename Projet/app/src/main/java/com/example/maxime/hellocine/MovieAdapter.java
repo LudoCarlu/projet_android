@@ -28,7 +28,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     public MovieHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view =  LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_movie_element,parent,false);
-
+        /**  On récupere notre vue pour afficher un ELEMENT du JSON (sa structure se trouve dans res/layout/rv_movie_element */
         return new MovieHolder(view);
     }
 
@@ -37,8 +37,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
         try {
            // JSONObject obj= this.movies.getJSONObject(position);
-            holder.name.setText(movies.getString("Title"));
-
+            holder.name.setText(movies.getString("Title")); /** Pour chaque element on set notre TextView en récupérant l'attribut Tittle du JSON*/
+            /** c'est normalement ici qu'on itére avec la position  quand on scroll */
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -48,7 +48,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
     @Override
     public int getItemCount() {
-        if(!this.movies.equals(null)){
+        if(!this.movies.equals(null)){ /** Compte le nombre d'élément de notre Recyclwer View */
             return this.movies.length();
         }else{
             return 0;
