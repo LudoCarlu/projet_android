@@ -33,9 +33,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 
 public class MovieActivity extends AppCompatActivity {
@@ -114,14 +116,18 @@ public class MovieActivity extends AppCompatActivity {
 
     public JSONObject getFilmFromFile()  {
         try {
+            JSONParser jsonParser = new JSONParser();
             InputStream is = new FileInputStream(getCacheDir() + "/" + "films.json"); /**  va récup le JSON en cache */
             byte[] buffer = new byte[is.available()];
             is.read(buffer);
             is.close();
-            return new JSONObject(new String(buffer, "UTF-8")); /** Retourne l'objet JSON */
+            //Log.i("JSON Files",new String(buffer, "UTF-8"));
+            return /*jsonParser.parseInputStream(is);*/new JSONObject(new String(buffer, "UTF-8")); /** Retourne l'objet JSON */
+
         }catch (IOException e){
             e.printStackTrace();
             return new JSONObject();
+
         }catch (JSONException e){
             e.printStackTrace();
             return new JSONObject();

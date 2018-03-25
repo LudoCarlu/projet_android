@@ -1,5 +1,6 @@
 package com.example.maxime.hellocine;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.support.v7.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
@@ -21,7 +25,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         }else{
             this.movies = new JSONObject();
         }
-
     }
 
     @Override
@@ -36,8 +39,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     public void onBindViewHolder(MovieHolder holder, int position) {
 
         try {
+            List<String> list = new ArrayList<String>();
+            JSONArray jsonArray = movies.getJSONArray("Title");
+
+            for(int i=0; i < jsonArray.length(); i++) {
+                list.add(jsonArray.get(i).toString());
+            }
+
+            //Log.i("JSON empty ?",movies.toString());
+
+            holder.name.setText(movies.get("Title").toString());
+            //holder.name.setText(movies.get(position).toString());
            // JSONObject obj= this.movies.getJSONObject(position);
-            holder.name.setText(movies.getString("Title")); /** Pour chaque element on set notre TextView en récupérant l'attribut Tittle du JSON*/
+            //holder.name.setText(movies.getString("Title")); /** Pour chaque element on set notre TextView en récupérant l'attribut Title du JSON*/
             /** c'est normalement ici qu'on itére avec la position  quand on scroll */
         } catch (JSONException e) {
             e.printStackTrace();
@@ -65,13 +79,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
 
     public class MovieHolder extends RecyclerView.ViewHolder{
-        public TextView name;
+        private TextView name;
 
         public MovieHolder(View view) {
             super(view);
-            this.name=view.findViewById(R.id.rv_movie_element_name);
+            this.name = (TextView) view.findViewById(R.id.rv_movie_element_name);
         }
     }
+
+
+
 
 
 

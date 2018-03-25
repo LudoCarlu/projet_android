@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.content.Context;
 import android.util.Log;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.FilterWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -68,24 +71,57 @@ public class GetFilmsService extends IntentService {
      * Handle action Foo in the provided background thread with the provided
      * parameters.
      */
+
     private void handleActionFilms() {
         Log.d("tag","Thread service:"+ Thread.currentThread().getName());
-        URL url=null;
-        try { /** On va récuperer notre fichier JSON avec l'api .. Attention au paramètre */
-            url= new URL("http://www.omdbapi.com/?t=Game%20of%20Thrones&Season=1&apikey=6da432bf");
+        //URL url=null;
+        /*try { /** On va récuperer notre fichier JSON avec l'api .. Attention au paramètre */
+            /*url= new URL("http://www.omdbapi.com/?t=Game%20of%20Thrones&Season=1&apikey=6da432bf");
+            //url = new URL ("http://www.omdbapi.com/?i=tt1480055&apikey=6da432bf");
             HttpURLConnection conn= (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();
             if(HttpURLConnection.HTTP_OK==conn.getResponseCode()){ /** On va sauvegarder notre JSON dans le cache de l'appli  dans un fichier .json*/
-                copyInputStreamToFile(conn.getInputStream(),new File(getCacheDir(),"films.json"));
+                /*copyInputStreamToFile(conn.getInputStream(),new File(getCacheDir(),"films.json"));
                 Log.d("OK","Films downloaded");
             }
         }catch (MalformedURLException e){
             e.printStackTrace();
         }catch (IOException e){
             e.printStackTrace();
+        }*/
+
+        JSONParser parser = new JSONParser();
+        String url = "http://www.omdbapi.com/?t=Game%20of%20Thrones&Season=1&apikey=6da432bf";
+        String result = parser.getJsonFromUrl(url);
+
+        /**Sauvegarde dans le cache de l'appli */
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(new File(getCacheDir(),"films.json")));
+            writer.write(result);
+            Log.i("JSONFiles : ",result);
         }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if ( writer != null)
+                    writer.close( );
+            }
+            catch ( IOException e)
+            {
+            }
+        }
+
+
     }
+
+
+
     private void copyInputStreamToFile(InputStream in, File file){
         try{
             OutputStream out=new FileOutputStream(file);
