@@ -100,7 +100,7 @@ public class GetFilmsService extends IntentService {
         try {
             writer = new BufferedWriter(new FileWriter(new File(getCacheDir(),"films.json")));
             writer.write(result);
-            Log.i("JSONFiles : ",result);
+            //Log.i("JSONFiles : ",result);
         }
         catch(IOException e) {
             e.printStackTrace();

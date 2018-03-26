@@ -39,14 +39,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     public void onBindViewHolder(MovieHolder holder, int position) {
 
         try {
-            List<String> list = new ArrayList<String>();
-            JSONArray jsonArray = movies.getJSONArray("Title");
 
-            for(int i=0; i < jsonArray.length(); i++) {
+            //JSONArray jsonArray = movies.getJSONArray("Title");
+
+            /*for(int i=0; i < jsonArray.length(); i++) {
                 list.add(jsonArray.get(i).toString());
-            }
+            }*/
 
-            //Log.i("JSON empty ?",movies.toString());
+            Log.i("JSON empty ?",movies.toString());
 
             holder.name.setText(movies.get("Title").toString());
             //holder.name.setText(movies.get(position).toString());

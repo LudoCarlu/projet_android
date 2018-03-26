@@ -118,11 +118,13 @@ public class MovieActivity extends AppCompatActivity {
         try {
             JSONParser jsonParser = new JSONParser();
             InputStream is = new FileInputStream(getCacheDir() + "/" + "films.json"); /**  va récup le JSON en cache */
-            byte[] buffer = new byte[is.available()];
-            is.read(buffer);
-            is.close();
+            //byte[] buffer = new byte[is.available()];
+            //is.read(buffer);
+            //is.close();
             //Log.i("JSON Files",new String(buffer, "UTF-8"));
-            return /*jsonParser.parseInputStream(is);*/new JSONObject(new String(buffer, "UTF-8")); /** Retourne l'objet JSON */
+            /** Le parseInputStream retourne le String correspondant au JSON */
+            return new JSONObject(jsonParser.parseInputStream(is));
+            //new JSONObject(new String(buffer, "UTF-8")); /** Retourne l'objet JSON */
 
         }catch (IOException e){
             e.printStackTrace();
