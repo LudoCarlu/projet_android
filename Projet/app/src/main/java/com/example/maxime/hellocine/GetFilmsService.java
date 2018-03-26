@@ -92,7 +92,9 @@ public class GetFilmsService extends IntentService {
         }*/
 
         JSONParser parser = new JSONParser();
-        String url = "http://www.omdbapi.com/?t=Game%20of%20Thrones&Season=1&apikey=6da432bf";
+        //String url = "http://www.omdbapi.com/?t=Game%20of%20Thrones&Season=1&apikey=6da432bf";
+        String url = "http://www.omdbapi.com/?t=Batman&apikey=6da432bf";
+
         String result = parser.getJsonFromUrl(url);
 
         /**Sauvegarde dans le cache de l'appli */
@@ -100,7 +102,7 @@ public class GetFilmsService extends IntentService {
         try {
             writer = new BufferedWriter(new FileWriter(new File(getCacheDir(),"films.json")));
             writer.write(result);
-            //Log.i("JSONFiles : ",result);
+
         }
         catch(IOException e) {
             e.printStackTrace();
@@ -119,8 +121,6 @@ public class GetFilmsService extends IntentService {
 
 
     }
-
-
 
     private void copyInputStreamToFile(InputStream in, File file){
         try{
