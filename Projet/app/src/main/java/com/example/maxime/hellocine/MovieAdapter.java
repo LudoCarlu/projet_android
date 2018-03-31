@@ -1,6 +1,7 @@
 package com.example.maxime.hellocine;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.AlertDialogLayout;
@@ -22,44 +23,29 @@ import java.util.ArrayList;
 import java.util.List;
 import android.os.AsyncTask;
 
+import com.bumptech.glide.Glide;
+
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
 
     private JSONObject movies;
-    private List<Films> films = null;
+    private JSONArray moviesResults = null;
 
-    public MovieAdapter(JSONObject movies){
+    public MovieAdapter(JSONObject movies) {
+
+        this.context = context;
+
         if (!(movies.equals(null))){
             this.movies = movies;
 
-            films = new ArrayList<Films>();
-
             try {
-                films.add(new Films(
-                        movies.getString("Title"),
-                        movies.getString("Year"),
-                        movies.getString("Released"),
-                        movies.getString("Runtime"),
-                        movies.getString("Genre"),
-                        movies.getString("Director"),
-                        movies.getString("Writer"),
-                        movies.getString("Actors"),
-                        movies.getString("Plot"),
-                        movies.getString("Language"),
-                        movies.getString("Country"),
-                        movies.getString("Awards"),
-                        movies.getString("Poster"),
-                        movies.getString("imdbID"),
-                        movies.getString("Type"),
-                        movies.getString("DVD"),
-                        movies.getString("BoxOffice"),
-                        movies.getString("Production")
-                )
-            );
+                this.moviesResults = movies.getJSONArray("results");
+                Log.i("MA Array RESULTS",this.moviesResults.toString());
+
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
 
         }else{
             this.movies = new JSONObject();
@@ -79,43 +65,31 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     /** Applique une donnée a une vue */
     public void onBindViewHolder(MovieHolder holder, int position) {
 
-        //try {
-            if(!this.films.isEmpty()) {
-                Films f = films.get(position);
-                holder.name.setText(f.getTitle());
-                holder.description.setText(f.getPlot());
+        try {
+            JSONObject m = moviesResults.getJSONObject(position);
+            holder.bind(m.getString("title"),m.getString("overview"),m.getString("poster_path"));
 
-                new DownLoadImageTask(holder.img).execute(f.getPoster());
-           }
-            //holder.name.setText(movies.getString("Title")); /** Pour chaque element on set notre TextView en récupérant l'attribut Title du JSON*/
-            /** c'est normalement ici qu'on itére avec la position  quand on scroll */
-       // } catch (JSONException e) {
-           // e.printStackTrace();
-        //}
-
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Override
     public int getItemCount() {
 
-        //if(!this.movies.equals(null)){ /** Compte le nombre d'élément de notre Recyclwer View */
-        //return this.movies.length();
-        //}else{
-        //   return 0;
-        //}
-        if(!films.isEmpty()) {
-            return films.size();
+        if(!this.movies.equals(null)){ /** Compte le nombre d'élément de notre Recyclwer View */
+            //Log.i("MA LENGHT",String.valueOf(this.moviesResults.length()));
+            return this.moviesResults.length();
+        }else{
+            return 0;
         }
-        return 0;
-
     }
 
     public void setNewMovie(JSONObject tab){
         this.movies=tab;
         notifyDataSetChanged();
     }
-
 
     public class MovieHolder extends RecyclerView.ViewHolder{
         private TextView name;
@@ -126,8 +100,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
             super(itemView);
             this.name = (TextView) itemView.findViewById(R.id.rv_movie_element_name);
             this.img = (ImageView) itemView.findViewById(R.id.rv_movie_element_img);
-            this.description = (TextView) itemView.findViewById(R.id.rv_movie_element_description);
+            //this.description = (TextView) itemView.findViewById(R.id.rv_movie_element_description);
 
+            /*
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -136,9 +111,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
                             .setMessage(description.toString())
                             .show();
                 }
-            });
+            });*/
         }
 
+        public void bind (String name, String desc, String imgUrl) {
+            this.name.setText(name);
+            //this.description.setText(desc);
+            // Glide library to download and load images
+            Glide.with(img.getContext()).load("https://image.tmdb.org/t/p/w500"+imgUrl).into(img);
+        }
 
     }
 
@@ -155,7 +136,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
             String urlOfImage = urls[0];
             Bitmap img = null;
             try {
-                InputStream is = new URL(urlOfImage).openStream();
+                InputStream is = new URL("https://image.tmdb.org/t/p/w500" + urlOfImage).openStream();
                 img = BitmapFactory.decodeStream(is);
 
             } catch (Exception e) {

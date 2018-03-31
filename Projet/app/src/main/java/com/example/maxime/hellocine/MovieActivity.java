@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.BottomNavigationView;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -82,7 +83,8 @@ public class MovieActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(new FilmUpdate(),intentFilter); /** On informe l'appli qu'on la téléchargé */
 
         this.rv = findViewById(R.id.rv_film); /** On récupere le recyclerview afin de lui setter du text plus tard */
-        rv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)); /** On lui indique comment afficher nos éléments */
+        //rv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)); /** On lui indique comment afficher nos éléments */
+        rv.setLayoutManager(new GridLayoutManager(this,2));
         MovieAdapter ma = new MovieAdapter(getFilmFromFile()); /** on va chercher notre fichier JSON et on le donne a MovieAdapter pour qu'il le parse */
         /**  Il va parser le JSON dans la fonction getFilmFromFile() qui va retourner notre tableau JSON, voir en dessous !
          * Logiquement il retourne un JSONArray mais comment c'est pas itérable je lui fait retourner UN UNIQUE OBJECT : JSONObject */

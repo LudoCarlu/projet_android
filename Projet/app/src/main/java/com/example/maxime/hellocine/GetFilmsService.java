@@ -1,5 +1,6 @@
 package com.example.maxime.hellocine;
 
+import android.app.DownloadManager;
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.Context;
@@ -38,6 +39,8 @@ public class GetFilmsService extends IntentService {
     // TODO: Rename actions, choose action names that describe tasks that this
     // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
     private static final String ACTION_GET_FILM = "com.example.maxime.hellocine.action.GETFILM";
+    private String APIKEY = "3ada60c13fe3eb7e9b92c41df28a40b4";
+    private String APIURL = "";
 
     public GetFilmsService() {
         super("GetFilmsService");
@@ -93,8 +96,9 @@ public class GetFilmsService extends IntentService {
 
         JSONParser parser = new JSONParser();
         //String url = "http://www.omdbapi.com/?t=Game%20of%20Thrones&Season=1&apikey=6da432bf";
-        String url = "http://www.omdbapi.com/?t=Batman&apikey=6da432bf";
-
+        //String url = "http://www.omdbapi.com/?t=Batman&apikey=6da432bf";
+        //https://api.themoviedb.org/3/discover/movie?api_key=3ada60c13fe3eb7e9b92c41df28a40b4&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1
+        String url = "https://api.themoviedb.org/3/discover/movie?api_key="+APIKEY+"&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
         String result = parser.getJsonFromUrl(url);
 
         /**Sauvegarde dans le cache de l'appli */
