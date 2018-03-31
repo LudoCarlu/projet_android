@@ -33,8 +33,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
     public MovieAdapter(JSONObject movies) {
 
-        this.context = context;
-
         if (!(movies.equals(null))){
             this.movies = movies;
 
