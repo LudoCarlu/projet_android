@@ -2,8 +2,10 @@ package com.example.maxime.hellocine;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.v7.widget.AlertDialogLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,8 +34,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     private JSONArray moviesResults = null;
 
     public MovieAdapter(JSONObject movies) {
-
-        if (!(movies.equals(null))){
+        //Log.i("JSON Empty ?",this.movies.toString());
+        if (!(movies.equals(null)) && movies.length() > 0){
             this.movies = movies;
 
             try {
@@ -65,7 +67,20 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
         try {
             JSONObject m = moviesResults.getJSONObject(position);
-            holder.bind(m.getString("title"),m.getString("overview"),m.getString("poster_path"));
+
+            FilmFinder finder = FilmFinder.getInstance();
+            finder.addFilm(
+                    new Films(
+                            m.getInt("id"),
+                            m.getString("title"),
+                            m.getString("poster_path"),
+                            m.getString("overview"),
+                            m.getString("vote_average"),
+                            m.getString("release_date")
+                    )
+            );
+
+            holder.bind(m.getString("title"),m.getString("overview"),m.getString("poster_path"), m.getInt("id"));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -76,7 +91,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     @Override
     public int getItemCount() {
 
-        if(!this.movies.equals(null)){ /** Compte le nombre d'élément de notre Recyclwer View */
+        if(!this.movies.equals(null) && movies.length() > 0){ /** Compte le nombre d'élément de notre Recyclwer View */
             //Log.i("MA LENGHT",String.valueOf(this.moviesResults.length()));
             return this.moviesResults.length();
         }else{
@@ -93,6 +108,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         private TextView name;
         private ImageView img;
         private TextView description;
+        private int filmId;
+
 
         public MovieHolder(final View itemView) {
             super(itemView);
@@ -100,19 +117,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
             this.img = (ImageView) itemView.findViewById(R.id.rv_movie_element_img);
             //this.description = (TextView) itemView.findViewById(R.id.rv_movie_element_description);
 
-            /*
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    new AlertDialog.Builder(itemView.getContext())
-                            .setTitle(name.toString())
-                            .setMessage(description.toString())
-                            .show();
+                    Intent i = new Intent(view.getContext(), DetailsFilmActivity.class);
+                    i.putExtra("filmId", filmId);
+                    view.getContext().startActivity(i);
                 }
-            });*/
+            });
         }
 
-        public void bind (String name, String desc, String imgUrl) {
+        public void bind (String name, String desc, String imgUrl, int filmId) {
             this.name.setText(name);
             //this.description.setText(desc);
             // Glide library to download and load images
