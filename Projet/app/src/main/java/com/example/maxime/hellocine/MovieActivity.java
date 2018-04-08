@@ -99,12 +99,12 @@ public class MovieActivity extends AppCompatActivity {
             }
         });*/
 
-        // Lancement extraction données du cache et remplissage du film finder
+        /** Lancement extraction données du cache et remplissage du film finder */
         initData();
 
-        Log.i("MActivity", "Insertion data dans le movie adapter" + FilmFinder.getInstance().getFilmsList()) ;
         MovieAdapter ma = new MovieAdapter(MovieActivity.this, FilmFinder.getInstance().getFilmsList(), new CustomItemClickListener() {
             @Override
+            /** Action que l'on fait quand on click sur un item du recycler */
             public void onItemClick(View v, int position) {
                 int id = FilmFinder.getInstance().getFilmsList().get(position).getId();
                 Intent i = new Intent(v.getContext(), DetailsFilmActivity.class);
@@ -144,7 +144,7 @@ public class MovieActivity extends AppCompatActivity {
     public JSONObject extractJSON()  {
         try {
             JSONParser jsonParser = new JSONParser();
-            InputStream is = new FileInputStream(getCacheDir() + "/" + "films.json"); /**  va récup le JSON en cache */
+            InputStream is = new FileInputStream(getCacheDir() + "/" + "films.json"); /** va récup le JSON en cache */
 
             /** Le parseInputStream retourne le String correspondant au JSON */
             return new JSONObject(jsonParser.parseInputStream(is));
@@ -159,10 +159,11 @@ public class MovieActivity extends AppCompatActivity {
         }
     }
 
-    // initialise le film finder
+    /** initialise le film finder */
+
     public void initData () {
 
-        // Va chercher dans le cache l'extrait de l'API
+        /** Va chercher dans le cache l'extrait de l'API */
         JSONObject jsonObject = extractJSON();
         JSONArray result = null;
         FilmFinder finder  = FilmFinder.getInstance();
@@ -176,7 +177,7 @@ public class MovieActivity extends AppCompatActivity {
             try {
                 result = jsonObject.getJSONArray("results");
 
-                Log.i("MActivity", "Results" + result.toString());
+                //Log.i("MActivity", "Results" + result.toString());
 
                 for (int i = 0; i < result.length(); i++) {
                     JSONObject jsonFilm = result.getJSONObject(i);
@@ -206,6 +207,7 @@ public class MovieActivity extends AppCompatActivity {
             Toast.makeText(MovieActivity.this,"Telechargement des films terminé !",Toast.LENGTH_SHORT).show();
             MovieAdapter ma = (MovieAdapter) rv.getAdapter();
             //ma.setNewMovie(getFilmFromFile()); /** S'il y va une modification de notre fichier, on update notre RecyclerView */
+            /** Si on veut modifier le contenu du recycler udpate le film finder */
             ma.setNewData(FilmFinder.getInstance().getFilmsList());
         }
     }

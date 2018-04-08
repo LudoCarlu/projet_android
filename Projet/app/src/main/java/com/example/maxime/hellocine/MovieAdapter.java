@@ -61,7 +61,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         /**  On récupere notre vue pour afficher un ELEMENT du JSON (sa structure se trouve dans res/layout/rv_movie_element */
         final MovieHolder mv = new MovieHolder(view);
 
-        /** On définit le custom listener qui sera utiliser pour afficher les détails au clic sur le film */
+        /** On définit le custom listener qui sera utiliser pour afficher les détails au clic sur le film
+         * Ce listener est une interface que l'on définit dans l'appel au constructeur du movie adapter (dans MovieActivity)
+         * */
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

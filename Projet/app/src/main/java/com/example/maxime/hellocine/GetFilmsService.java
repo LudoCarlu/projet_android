@@ -98,7 +98,7 @@ public class GetFilmsService extends IntentService {
         //String url = "http://www.omdbapi.com/?t=Game%20of%20Thrones&Season=1&apikey=6da432bf";
         //String url = "http://www.omdbapi.com/?t=Batman&apikey=6da432bf";
         //https://api.themoviedb.org/3/discover/movie?api_key=3ada60c13fe3eb7e9b92c41df28a40b4&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1
-        String url = "https://api.themoviedb.org/3/discover/movie?api_key="+APIKEY+"&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
+        String url = "https://api.themoviedb.org/3/discover/movie?api_key="+APIKEY+"&language=fr-FR&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
         String result = parser.getJsonFromUrl(url);
 
         /**Sauvegarde dans le cache de l'appli */
