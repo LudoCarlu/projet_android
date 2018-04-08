@@ -20,17 +20,16 @@ public class DetailsFilmActivity extends AppCompatActivity {
 
         Films f = FilmFinder.getInstance().getFilmById(id);
 
+        TextView t_titre = findViewById(R.id.details_film_titre);
+        t_titre.setText(f.getTitre());
+
         TextView t_desc = findViewById(R.id.details_film_description);
         t_desc.setText(f.getDesc());
 
-       // TextView t_note = findViewById(R.id.details_film_;
-       // t_desc.setText(this.desc);
-
-        TextView t_released = findViewById(R.id.details_film_released_date);
+        TextView t_released = findViewById(R.id.details_film_release_date);
         t_released.setText(f.getReleaseDate());
 
         ImageView t_imgUrl = findViewById(R.id.details_film_image);
-        //t_imgUrl.setText(this.releasedDate);
         Glide.with(this).load("https://image.tmdb.org/t/p/w500"+f.getImgUrl()).into(t_imgUrl);
 
 

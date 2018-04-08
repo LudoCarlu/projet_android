@@ -39,12 +39,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 
 public class MovieActivity extends AppCompatActivity {
 
-
-    public RecyclerView rv=null;
+    public RecyclerView rv = null;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -72,6 +72,7 @@ public class MovieActivity extends AppCompatActivity {
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -83,17 +84,41 @@ public class MovieActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(new FilmUpdate(),intentFilter); /** On informe l'appli qu'on la téléchargé */
 
         this.rv = findViewById(R.id.rv_film); /** On récupere le recyclerview afin de lui setter du text plus tard */
-        //rv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)); /** On lui indique comment afficher nos éléments */
         rv.setLayoutManager(new GridLayoutManager(this,2));
-        MovieAdapter ma = new MovieAdapter(getFilmFromFile()); /** on va chercher notre fichier JSON et on le donne a MovieAdapter pour qu'il le parse */
-        /**  Il va parser le JSON dans la fonction getFilmFromFile() qui va retourner notre tableau JSON, voir en dessous !
-         * Logiquement il retourne un JSONArray mais comment c'est pas itérable je lui fait retourner UN UNIQUE OBJECT : JSONObject */
+
+        /*
+        MovieAdapter ma = new MovieAdapter(getFilmFromFile(), new CustomItemClickListener() {
+            @Override
+            // Pour définir l'action que l'on fait au moment du clic
+            public void onItemClick(View v, int position) {
+                Log.i("ON CLICK POSITION", String.valueOf(position));
+                Films f = FilmFinder.getInstance().getFilmByPosition(position);
+                Intent i = new Intent(v.getContext(), DetailsFilmActivity.class);
+                i.putExtra("filmId", position);
+                v.getContext().startActivity(i);
+            }
+        });*/
+
+        // Lancement extraction données du cache et remplissage du film finder
+        initData();
+
+        Log.i("MActivity", "Insertion data dans le movie adapter" + FilmFinder.getInstance().getFilmsList()) ;
+        MovieAdapter ma = new MovieAdapter(MovieActivity.this, FilmFinder.getInstance().getFilmsList(), new CustomItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                int id = FilmFinder.getInstance().getFilmsList().get(position).getId();
+                Intent i = new Intent(v.getContext(), DetailsFilmActivity.class);
+                i.putExtra("filmId", id);
+                v.getContext().startActivity(i);
+
+            }
+        });
 
         rv.setAdapter(ma); /**  On donne le movie Adapter a notre Recycler view */
 
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu (Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         return true;
@@ -116,17 +141,13 @@ public class MovieActivity extends AppCompatActivity {
     }
 
 
-    public JSONObject getFilmFromFile()  {
+    public JSONObject extractJSON()  {
         try {
             JSONParser jsonParser = new JSONParser();
             InputStream is = new FileInputStream(getCacheDir() + "/" + "films.json"); /**  va récup le JSON en cache */
-            //byte[] buffer = new byte[is.available()];
-            //is.read(buffer);
-            //is.close();
-            //Log.i("JSON Files",new String(buffer, "UTF-8"));
+
             /** Le parseInputStream retourne le String correspondant au JSON */
             return new JSONObject(jsonParser.parseInputStream(is));
-            //new JSONObject(new String(buffer, "UTF-8")); /** Retourne l'objet JSON */
 
         }catch (IOException e){
             e.printStackTrace();
@@ -138,6 +159,45 @@ public class MovieActivity extends AppCompatActivity {
         }
     }
 
+    // initialise le film finder
+    public void initData () {
+
+        // Va chercher dans le cache l'extrait de l'API
+        JSONObject jsonObject = extractJSON();
+        JSONArray result = null;
+        FilmFinder finder  = FilmFinder.getInstance();
+
+        if (!(jsonObject.equals(null)) && jsonObject.length() > 0) {
+
+            if(finder.getFilmsList().isEmpty() ==  false) {
+                finder.getFilmsList().clear();
+            }
+
+            try {
+                result = jsonObject.getJSONArray("results");
+
+                Log.i("MActivity", "Results" + result.toString());
+
+                for (int i = 0; i < result.length(); i++) {
+                    JSONObject jsonFilm = result.getJSONObject(i);
+                    finder.addFilm(
+                            new Films(
+                                    jsonFilm.getInt("id"),
+                                    jsonFilm.getString("title"),
+                                    jsonFilm.getString("poster_path"),
+                                    jsonFilm.getString("overview"),
+                                    jsonFilm.getString("vote_average"),
+                                    jsonFilm.getString("release_date")
+                            )
+                    );
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public static final String FILMS_UPDATE="com.octip.cours.inf4042_11.FILMS_UPDATE";
     public class FilmUpdate extends BroadcastReceiver {
@@ -145,7 +205,8 @@ public class MovieActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent){ /** Receiver : lorsque le telechargement se finit (genre de Listener de notre service*/
             Toast.makeText(MovieActivity.this,"Telechargement des films terminé !",Toast.LENGTH_SHORT).show();
             MovieAdapter ma = (MovieAdapter) rv.getAdapter();
-            ma.setNewMovie(getFilmFromFile()); /** S'il y va une modification de notre fichier, on update notre RecyclerView */
+            //ma.setNewMovie(getFilmFromFile()); /** S'il y va une modification de notre fichier, on update notre RecyclerView */
+            ma.setNewData(FilmFinder.getInstance().getFilmsList());
         }
     }
 

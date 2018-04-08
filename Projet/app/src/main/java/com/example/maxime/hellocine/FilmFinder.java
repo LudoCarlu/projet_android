@@ -1,5 +1,7 @@
 package com.example.maxime.hellocine;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,9 +12,15 @@ import java.util.List;
 public class FilmFinder {
 
     private static FilmFinder FILMFINDER = null;
-    private List<Films> filmsList = null;
+    private ArrayList<Films> filmsList = null;
 
-    private FilmFinder() {}
+    private FilmFinder() {
+        if(filmsList == null) {
+            filmsList = new ArrayList<Films>();
+            Log.i("Film Finder", "Création");
+
+        }
+    }
 
     public static FilmFinder getInstance() {
 
@@ -34,13 +42,18 @@ public class FilmFinder {
     }
 
     public void addFilm (Films f) {
-        if(filmsList == null) {
-            filmsList = new ArrayList<Films>();
+        if(filmsList != null) {
             filmsList.add(f);
+            Log.i("Film Finder", "Ajout film");
         }
-        else {
-            filmsList.add(f);
-        }
+    }
+
+    public ArrayList<Films> getFilmsList() {
+        return this.filmsList;
+    }
+
+    public void clearList() {
+        filmsList.clear();
     }
 
 }

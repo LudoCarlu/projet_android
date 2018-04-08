@@ -42,13 +42,11 @@ public class Films {
         return release_date;
     }
 
-    public void setReleaseDate(String releasedDate) {
-        this.release_date = releasedDate;
+    public void setReleaseDate(String releaseDate) {
+        this.release_date = releaseDate;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
-    }
+    public String getImgUrl() { return imgUrl; }
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
