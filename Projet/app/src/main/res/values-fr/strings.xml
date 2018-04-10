@@ -12,4 +12,9 @@
         <string name="descr_serie"> Retrouvez la description des series, leurs notes, les épisodes, leur résumé et bien plus encore ! </string>
         <string name="here"> Ici ! </string>
         <string name="already_here"> Vous êtes déjà sur la bonne page ! </string>
+        <string name="details_description">Description : </string>
+        <string name="details_note">Note : </string>
+        <string name="details_titre">Titre : </string>
+        <string name="details_date_sortie"> Date de sortie : </string>
+        <string name="boutonacceuil"> Top 20 des films les plus populaires </string>
 </resources>

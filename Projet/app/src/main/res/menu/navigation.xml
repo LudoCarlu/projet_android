@@ -11,9 +11,9 @@
         android:icon="@drawable/ic_local_movies_black_24dp"
         android:title="@string/title_films" />
 
-    <item
+    <!--item
         android:id="@+id/navigation_serie"
         android:icon="@drawable/ic_serie_creation_black_24dp"
-        android:title="@string/title_series" />
+        android:title="@string/title_series" -->
 
 </menu>

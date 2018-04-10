@@ -29,10 +29,11 @@ public class SerieActivity extends AppCompatActivity {
                     SerieActivity.this.finish();
                     startActivity(intent2);
                     return true;
-
+                /*
                 case R.id.navigation_serie:
                     Toast.makeText(SerieActivity.this, R.string.already_here, Toast.LENGTH_SHORT).show();
                     return true;
+                */
             }
             return false;
         }
@@ -42,7 +43,7 @@ public class SerieActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_serie);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setSelectedItemId(R.id.navigation_serie);
+        //navigation.setSelectedItemId(R.id.navigation_serie);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 

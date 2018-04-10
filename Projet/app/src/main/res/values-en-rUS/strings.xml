@@ -12,5 +12,9 @@
     <string name="descr_serie"> Find the description of series , the rating and more ! </string>
     <string name="here"> Here ! </string>
     <string name="already_here"> You are already on the right page ! </string>
-
+    <string name="details_description">Overview: </string>
+    <string name="details_note">Rate: </string>
+    <string name="details_titre">Title: </string>
+    <string name="details_date_sortie"> Release date: </string>
+    <string name="boutonacceuil"> Top 20 of the most popular movies</string>
 </resources>

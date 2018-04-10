@@ -61,11 +61,6 @@ public class MovieActivity extends AppCompatActivity {
                     Toast.makeText(MovieActivity.this, R.string.already_here, Toast.LENGTH_SHORT).show();
                     return true;
 
-                case R.id.navigation_serie:
-                    Intent intent3 = new Intent(MovieActivity.this, SerieActivity.class);
-                    MovieActivity.this.finish();
-                    startActivity(intent3);
-                    return true;
             }
             return false;
         }
@@ -85,19 +80,6 @@ public class MovieActivity extends AppCompatActivity {
 
         this.rv = findViewById(R.id.rv_film); /** On récupere le recyclerview afin de lui setter du text plus tard */
         rv.setLayoutManager(new GridLayoutManager(this,2));
-
-        /*
-        MovieAdapter ma = new MovieAdapter(getFilmFromFile(), new CustomItemClickListener() {
-            @Override
-            // Pour définir l'action que l'on fait au moment du clic
-            public void onItemClick(View v, int position) {
-                Log.i("ON CLICK POSITION", String.valueOf(position));
-                Films f = FilmFinder.getInstance().getFilmByPosition(position);
-                Intent i = new Intent(v.getContext(), DetailsFilmActivity.class);
-                i.putExtra("filmId", position);
-                v.getContext().startActivity(i);
-            }
-        });*/
 
         /** Lancement extraction données du cache et remplissage du film finder */
         initData();
@@ -139,7 +121,6 @@ public class MovieActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
     public JSONObject extractJSON()  {
         try {
