@@ -77,22 +77,6 @@ public class GetFilmsService extends IntentService {
 
     private void handleActionFilms() {
         Log.d("tag","Thread service:"+ Thread.currentThread().getName());
-        //URL url=null;
-        /*try { /** On va récuperer notre fichier JSON avec l'api .. Attention au paramètre */
-            /*url= new URL("http://www.omdbapi.com/?t=Game%20of%20Thrones&Season=1&apikey=6da432bf");
-            //url = new URL ("http://www.omdbapi.com/?i=tt1480055&apikey=6da432bf");
-            HttpURLConnection conn= (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.connect();
-            if(HttpURLConnection.HTTP_OK==conn.getResponseCode()){ /** On va sauvegarder notre JSON dans le cache de l'appli  dans un fichier .json*/
-                /*copyInputStreamToFile(conn.getInputStream(),new File(getCacheDir(),"films.json"));
-                Log.d("OK","Films downloaded");
-            }
-        }catch (MalformedURLException e){
-            e.printStackTrace();
-        }catch (IOException e){
-            e.printStackTrace();
-        }*/
 
         JSONParser parser = new JSONParser();
         //String url = "http://www.omdbapi.com/?t=Game%20of%20Thrones&Season=1&apikey=6da432bf";

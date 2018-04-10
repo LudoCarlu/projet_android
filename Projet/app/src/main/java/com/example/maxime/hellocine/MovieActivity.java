@@ -185,7 +185,21 @@ public class MovieActivity extends AppCompatActivity {
     public class FilmUpdate extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent){ /** Receiver : lorsque le telechargement se finit (genre de Listener de notre service*/
-            Toast.makeText(MovieActivity.this,"Telechargement des films terminé !",Toast.LENGTH_SHORT).show();
+            if(FilmFinder.getInstance().getFilmsList() == null || FilmFinder.getInstance().getFilmsList().isEmpty()) {
+
+                /* Ne fonctionne pas
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("Echec du téléchargement des films !").setTitle("API Error");
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                */
+
+                Toast.makeText(MovieActivity.this,"Echec du téléchargement des films !",Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(MovieActivity.this,"Telechargement des films terminé !",Toast.LENGTH_SHORT).show();
+            }
+
             MovieAdapter ma = (MovieAdapter) rv.getAdapter();
             //ma.setNewMovie(getFilmFromFile()); /** S'il y va une modification de notre fichier, on update notre RecyclerView */
             /** Si on veut modifier le contenu du recycler udpate le film finder */

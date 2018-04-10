@@ -17,34 +17,12 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
 
-    //private JSONObject movies;
-    //private JSONArray moviesResults = null;
-
     private Context mContext = null;
     private ArrayList<Films> data = null;
 
     // Pour faire passer le détail dans l'autre activité
     private CustomItemClickListener listener;
 
-    /*
-    public MovieAdapter(JSONObject movies, CustomItemClickListener listener) {
-
-        this.listener = listener;
-
-        if (!(movies.equals(null)) && movies.length() > 0){
-            this.movies = movies;
-
-            try {
-                this.moviesResults = movies.getJSONArray("results");
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }else{
-            this.movies = new JSONObject();
-        }
-    }*/
 
     public MovieAdapter(Context mContext, ArrayList<Films> data, CustomItemClickListener listener) {
 
@@ -92,12 +70,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
             return 0;
         }
     }
-
-    /*
-    public void setNewMovie(JSONObject tab){
-        this.movies=tab;
-        notifyDataSetChanged();
-    }*/
+    
 
     public void setNewData (ArrayList<Films> list) {
         this.data = list;
