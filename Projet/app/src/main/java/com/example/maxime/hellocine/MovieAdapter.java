@@ -70,7 +70,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
             return 0;
         }
     }
-    
+
 
     public void setNewData (ArrayList<Films> list) {
         this.data = list;
