@@ -17,4 +17,8 @@
         <string name="details_titre">Titre : </string>
         <string name="details_date_sortie"> Date de sortie : </string>
         <string name="boutonacceuil"> Top 20 des films les plus populaires </string>
+        <string name="liengithub"> Rejoignez le projet Hellocine ! </string>
+        <string name="titre_notif"> Soutenez notre application ! </string>
+        <string name="desc_notif"> Ne partez pas ! Revenez!</string>
+        <string name="err_search"> Oups ! Fonctionnalite non implementé </string>
 </resources>

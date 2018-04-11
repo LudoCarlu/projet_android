@@ -43,5 +43,14 @@
             android:drawableLeft="@drawable/ic_local_movies_black_24dp"
             />
 
+
+        <Button
+            android:id="@+id/button_github"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:text="@string/liengithub"
+            android:drawableRight="@drawable/ic_group_black_24dp"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

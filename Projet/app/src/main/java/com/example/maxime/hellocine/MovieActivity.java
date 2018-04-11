@@ -3,6 +3,7 @@ package com.example.maxime.hellocine;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Movie;
 import android.support.design.widget.BottomNavigationView;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -113,9 +114,9 @@ public class MovieActivity extends AppCompatActivity {
             case R.id.aboutus:
                 new AlertDialog.Builder(MovieActivity.this).setMessage(R.string.aboutus_text).show();
                 return true;
-/*            case R.id.item2:
-                Toast.makeText(MainActivity.this, "Toast : You press pause", Toast.LENGTH_SHORT).show();
-                return true;*/
+            case R.id.action_search:
+                new android.support.v7.app.AlertDialog.Builder(MovieActivity.this).setMessage(R.string.err_search).show();
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
